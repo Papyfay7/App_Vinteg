@@ -1,23 +1,18 @@
 import React, { useState } from "react";
-import {
-    View,
-    Text,
-    StyleSheet,
-    ScrollView,
-    FlatList,
-    Image,
-    TouchableOpacity,
-    TextInput,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView, FlatList, Image, TouchableOpacity, TextInput } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import SellScreen from "./SellScreen";
 import ProfileScreen from "./ProfileScreen";
 import SearchScreen from "./SearchScreen";
 import InboxScreen from "./InboxScreen";
+
 const Tab = createBottomTabNavigator();
 
 const HomeScreen = () => {
+    const navigation = useNavigation();
+
     // Dummy data for the images/cards
     const data = [
         {
@@ -49,8 +44,13 @@ const HomeScreen = () => {
         updatedLikes[index] += 1;
         setLikes(updatedLikes);
     };
+
+    const handleCardPress = (item) => {
+        navigation.navigate("ProductDetailScreen", { product: item });
+    };
+
     const renderCard = ({ item, index }) => (
-        <View style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={() => handleCardPress(item)}>
             <Image source={item.image} style={styles.image} />
             <View style={styles.cardContent}>
                 <View style={styles.titleContainer}>
@@ -71,7 +71,7 @@ const HomeScreen = () => {
                 </View>
                 <Text style={styles.price}>{item.price}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
     return (
@@ -83,20 +83,21 @@ const HomeScreen = () => {
                 </View>
                 <FlatList
                     data={[
-                        "Vêtements",
-                        "Chaussures",
-                        "Accessoires",
-                        "Électronique",
-                        "Maison et jardin",
-                        "Sport et plein air",
-                        "Beauté et santé",
-                        "Livres et divertissement",
-                        "Auto et moto",
-                        "Alimentation",
+                        { name: "Vêtements", icon: "shopping-bag" },
+                        { name: "Chaussures", icon: "directions-walk" },
+                        { name: "Accessoires", icon: "local-drink" },
+                        { name: "Électronique", icon: "smartphone" },
+                        { name: "Maison et jardin", icon: "home" },
+                        { name: "Sport et plein air", icon: "directions-run" },
+                        { name: "Beauté et santé", icon: "spa" },
+                        { name: "Livres et divertissement", icon: "book" },
+                        { name: "Auto et moto", icon: "directions-car" },
+                        { name: "Alimentation", icon: "restaurant" },
                     ]}
                     renderItem={({ item }) => (
                         <TouchableOpacity style={styles.categoryItem}>
-                            <Text>{item}</Text>
+                            <Icon name={item.icon} size={19} color="black" style={styles.icon} />
+                            <Text style={styles.categoryName}>{item.name}</Text>
                         </TouchableOpacity>
                     )}
                     keyExtractor={(item, index) => index.toString()}
@@ -140,7 +141,6 @@ const HomeScreen = () => {
         </ScrollView>
     );
 };
-
 const App = () => {
     return (
         <Tab.Navigator
@@ -207,23 +207,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         paddingHorizontal: 10,
         paddingTop: 10,
-    },
-    header: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: "bold",
-    },
-    viewMoreButton: {
-        padding: 5,
-        borderRadius: 5,
-    },
-    viewMoreText: {
-        color: "orange",
-        fontWeight: "bold",
     },
     searchBarContainer: {
         marginBottom: 10,
@@ -302,14 +285,16 @@ const styles = StyleSheet.create({
         padding: 10,
         marginRight: 10,
         borderRadius: 8,
-        color: 'white'
+        color: 'white',
+        flexDirection: 'row', // Aligne les éléments horizontalement
+        alignItems: 'center', // Centre verticalement les éléments
+        marginRight: 10,
     },
     categoriesContainer: {
         paddingHorizontal: 10,
         paddingBottom: 20,
     },
-
-    searchBarContainer: {
+  searchBarContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
@@ -317,7 +302,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 10,
         backgroundColor: '#fff',
-        marginBottom:15,
+        marginBottom: 15,
     },
     searchIcon: {
         marginRight: 10,
@@ -327,9 +312,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 40,
         color: '#333',
-    },
-
-
+    }
 });
 
 export default App;

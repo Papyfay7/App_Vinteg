@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-
 
 const ProfileScreen = () => {
   return (
@@ -12,17 +11,51 @@ const ProfileScreen = () => {
           <Text style={styles.username}>JohnDoe123</Text>
           <View style={styles.viewProfileContainer}>
             <Text style={styles.viewProfileText}>Voir profile</Text>
-            <MaterialIcons name="arrow-forward" size={24} color="#333" style={styles.arrowIcon} />
           </View>
         </View>
       </TouchableOpacity>
-      <View style={styles.userInfo}>
-        <Text style={styles.userInfoText}>Email: johndoe@example.com</Text>
-        <Text style={styles.userInfoText}>Member since: January 2022</Text>
-      </View>
-      {/* Section "Mes articles" */}
-      {/* Section "Mes favoris" */}
-      {/* Section "Mes achats" */}
+      <TouchableOpacity>
+        <View style={styles.sectionContainer}>
+          <MaterialIcons name="favorite" size={24} color="blue" style={styles.icon} />
+          <Text style={styles.sectionTitle}>Article favori</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <View style={styles.sectionContainer}>
+          <MaterialIcons name="palette" size={24} color="green" style={styles.icon} />
+          <Text style={styles.sectionTitle}>Personalisation</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <View style={styles.sectionContainer}>
+          <MaterialIcons name="store" size={24} color="orange" style={styles.icon} />
+          <Text style={styles.sectionTitle}>Mes articles en vente</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <View style={styles.sectionContainer}>
+          <MaterialIcons name="shopping-cart" size={24} color="purple" style={styles.icon} />
+          <Text style={styles.sectionTitle}>Mes achats récents</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <View style={styles.sectionContainer}>
+          <MaterialIcons name="forum" size={24} color="brown" style={styles.icon} />
+          <Text style={styles.sectionTitle}>Forums</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <View style={styles.sectionContainer}>
+          <MaterialIcons name="settings" size={24} color="red" style={styles.icon} />
+          <Text style={styles.sectionTitle}>Paramétres</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <View style={styles.sectionContainer}>
+          <MaterialIcons name="info" size={24} color="black" style={styles.icon} />
+          <Text style={styles.sectionTitle}>À propos de Vinteg</Text>
+        </View>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.logoutButton}>
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
@@ -36,7 +69,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
- profilePic: {
+  profilePic: {
     width: 70,
     height: 70,
     borderRadius: 60,
@@ -49,9 +82,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    borderTopColor: '#ccc',
+    paddingTop: 20,
   },
   username: {
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 5,
@@ -68,22 +103,43 @@ const styles = StyleSheet.create({
   arrowIcon: {
     marginLeft: 'auto',
   },
-  userInfoText: {
+  sectionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#ECE5DD', // Couleur caractéristique de WhatsApp
+    paddingVertical: 15,
+  },
+  sectionTitle: {
     fontSize: 16,
-    color: '#666',
-    marginBottom: 5,
+    marginLeft: 10,
+  },
+  icon: {
+    marginRight: 10,
   },
   logoutButton: {
-    backgroundColor: 'red',
+    backgroundColor: 'orange', // Couleur bleue caractéristique de Facebook
     paddingVertical: 12,
-    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderRadius: 8,
     alignItems: 'center',
+    marginTop: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   logoutText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
-  }
+  },
+
 });
+
 
 export default ProfileScreen;
