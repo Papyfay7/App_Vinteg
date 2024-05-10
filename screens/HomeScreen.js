@@ -82,18 +82,20 @@ const HomeScreen = () => {
                     <TextInput style={styles.searchBar} placeholder="Rechercher" />
                 </View>
                 <FlatList
-                    data={[
-                        { name: "Vêtements", icon: "shopping-bag" },
-                        { name: "Chaussures", icon: "directions-walk" },
-                        { name: "Accessoires", icon: "local-drink" },
-                        { name: "Électronique", icon: "smartphone" },
-                        { name: "Maison et jardin", icon: "home" },
-                        { name: "Sport et plein air", icon: "directions-run" },
-                        { name: "Beauté et santé", icon: "spa" },
-                        { name: "Livres et divertissement", icon: "book" },
-                        { name: "Auto et moto", icon: "directions-car" },
-                        { name: "Alimentation", icon: "restaurant" },
-                    ]}
+         data={[
+    { name: "Vêtements", icon: "local-mall" },
+    { name: "Chaussures", icon: "directions-walk" },
+    { name: "Accessoires", icon: "shopping-bag" },
+    { name: "Électronique", icon: "tv" },
+    { name: "Maison et jardin", icon: "home" },
+    { name: "Sport et plein air", icon: "directions-bike" },
+    { name: "Beauté et santé", icon: "spa" },
+    { name: "Livres et divertissement", icon: "book" },
+    { name: "Auto et moto", icon: "directions-car" },
+    { name: "Alimentation", icon: "restaurant" },
+]}
+
+
                     renderItem={({ item }) => (
                         <TouchableOpacity style={styles.categoryItem}>
                             <Icon name={item.icon} size={19} color="black" style={styles.icon} />

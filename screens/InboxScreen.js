@@ -1,109 +1,54 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { Icon } from 'react-native-elements';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import Icon from "react-native-vector-icons/MaterialIcons"; // Importation de l'icône de MaterialIcons
 
-const offersData = [
-  {
-    id: 1,
-    title: 'Veste habillé',
-    price: '80€',
-    originalPrice: '75€',
-    time: '3 min',
-    buyer: '@danique_14',
-    rating: 4.2,
-    numReviews: 13,
-    status: 'En cours',
-  },
-  {
-    id: 2,
-    title: 'Baskets montantes',
-    price: '80€',
-    originalPrice: '75€',
-    time: '23 min',
-    buyer: '@colasmrd',
-    rating: 4.1,
-    numReviews: 21,
-    status: 'En cours',
-  },
-  {
-    id: 3,
-    title: 'Chemise rayée',
-    price: '50€',
-    originalPrice: '55€',
-    time: '1h',
-    buyer: '@emilie_g',
-    rating: 4.5,
-    numReviews: 8,
-    status: 'Délivré',
-  },
-];
-
-const Offers = () => {
-  const [selectedPart, setSelectedPart] = useState('tous');
-
-  const filteredOffers = offersData.filter(offer => {
-    if (selectedPart === 'tous') {
-      return true;
-    } else if (selectedPart === 'en_cours') {
-      return offer.status === 'En cours';
-    } else if (selectedPart === 'delivres') {
-      return offer.status === 'Délivré';
-    }
-  });
-
-  const renderOfferItem = ({ item }) => (
-    <View style={styles.offerContainer}>
-      <View style={styles.offerTitleContainer}>
-        <Text style={styles.offerTitle}>{item.title}</Text>
-        <Text style={styles.offerTime}>{item.time}</Text>
-      </View>
-      <View style={styles.offerDetailsContainer}>
-        <View style={styles.offerPriceContainer}>
-          <Text style={styles.offerPrice}>{item.price}</Text>
-          <Text style={styles.offerOriginalPrice}>{item.originalPrice}</Text>
-        </View>
-        <View style={styles.offerBuyerContainer}>
-          <Icon name="user" type="font-awesome" color="gray" />
-          <Text style={styles.offerBuyer}>{item.buyer}</Text>
-        </View>
-        <View style={styles.offerRatingContainer}>
-          <Icon name="star" type="font-awesome" color="orange" />
-          <Text style={styles.offerRating}>{item.rating}</Text>
-          <Text style={styles.offerNumReviews}>({item.numReviews})</Text>
-        </View>
-      </View>
-      <View style={styles.offerStatusContainer}>
-        <Text style={styles.offerStatus}>{item.status}</Text>
-      </View>
-    </View>
-  );
-
-  const renderNoItemsMessage = () => (
-    <View style={styles.noItemsContainer}>
-      <Text style={styles.noItemsText}>Aucun article trouvé pour ce filtre</Text>
-    </View>
-  );
-
+const ChatListScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.filterContainer}>
-        <TouchableOpacity onPress={() => setSelectedPart('tous')} style={[styles.filterButton, selectedPart === 'tous' && styles.selectedFilterButton]}>
-          <Text style={styles.filterButtonText}>Tous</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setSelectedPart('en_cours')} style={[styles.filterButton, selectedPart === 'en_cours' && styles.selectedFilterButton]}>
-          <Text style={styles.filterButtonText}>En cours</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setSelectedPart('delivres')} style={[styles.filterButton, selectedPart === 'delivres' && styles.selectedFilterButton]}>
-          <Text style={styles.filterButtonText}>Délivrés</Text>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Chats</Text>
+        <TouchableOpacity style={styles.headerIconContainer}>
+          <Icon name="chat" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
-      {filteredOffers.length === 0 && selectedPart === 'en_cours' && renderNoItemsMessage()}
-      {filteredOffers.length === 0 && selectedPart === 'tous' && renderNoItemsMessage()}
-      <FlatList
-        data={filteredOffers}
-        renderItem={renderOfferItem}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      <View style={styles.searchBarContainer}>
+        <Icon name="search" size={24} color="#757575" /> 
+        <TextInput 
+          style={styles.searchBarInput}
+          placeholder="Search chats"
+          placeholderTextColor="#757575"
+        />
+      </View>
+      <View style={styles.chatList}>
+        {/* Liste des chats */}
+        <TouchableOpacity
+          style={styles.chatItem}
+          onPress={() => navigation.navigate('ChatScreen')}>
+          <Image
+            source={require('../assets/téléchargement (1).jpeg')}
+            style={styles.profileImage}
+          />
+          <View style={styles.chatDetails}>
+            <Text style={styles.chatName}>John Doe</Text>
+            <Text style={styles.lastMessage}>Hello there!</Text>
+          </View>
+          <Text style={styles.time}>10:30 AM</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.chatItem}
+          onPress={() => navigation.navigate('ChatScreen')}>
+          <Image
+            source={require('../assets/téléchargement.jpeg')}
+            style={styles.profileImage}
+          />
+          <View style={styles.chatDetails}>
+            <Text style={styles.chatName}>Jane Smith</Text>
+            <Text style={styles.lastMessage}>How are you?</Text>
+          </View>
+          <Text style={styles.time}>Yesterday</Text>
+        </TouchableOpacity>
+        {/* Ajoutez plus d'éléments de chat ici si nécessaire */}
+      </View>
     </View>
   );
 };
@@ -111,117 +56,81 @@ const Offers = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    backgroundColor: '#f0f0f0',
   },
-  filterContainer: {
+  header: {
+    backgroundColor: '#075E54',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  filterButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: 'gray',
-  },
-  selectedFilterButton: {
-    backgroundColor: 'gray',
-  },
-  filterButtonText: {
-    fontSize: 14,
-    color: 'black',
-  },
-  offerContainer: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  offerTitleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 15,
+    paddingBottom: 10,
   },
-  offerTitle: {
-    fontSize: 16,
+  headerText: {
+    fontSize: 24,
+    color: '#fff',
     fontWeight: 'bold',
   },
-  offerTime: {
-    fontSize: 14,
-    color: 'gray',
+  headerIconContainer: {
+    padding: 10,
+    borderRadius: 20,
+    backgroundColor: '#128C7E',
   },
-  offerDetailsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  offerPriceContainer: {
+  searchBarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
-  offerPrice: {
-    fontSize: 16,
+  searchBarInput: {
+    flex: 1,
+    marginLeft: 10,
+    fontSize: 18,
+    color: '#333',
+  },
+  chatList: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingTop: 20,
+  },
+  chatItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 15,
+  },
+  chatDetails: {
+    flex: 1,
+  },
+  chatName: {
+    fontSize: 18,
     fontWeight: 'bold',
-    color: 'green',
+    color: '#333',
   },
-  offerOriginalPrice: {
-    fontSize: 14,
-    color: 'gray',
-    textDecorationLine: 'line-through',
-    marginLeft: 4,
-  },
-  offerBuyerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  offerBuyer: {
-    fontSize: 14,
-    color: 'gray',
-    marginLeft: 4,
-  },
-  offerRatingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  offerRating: {
-    fontSize: 14,
-    color: 'orange',
-    marginLeft: 4,
-  },
-  offerNumReviews: {
-    fontSize: 14,
-    color: 'gray',
-    marginLeft: 4,
-  },
-  offerStatusContainer: {
-    backgroundColor: 'orange',
-    borderRadius: 12,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    alignItems: 'center',
-    marginTop: 12,
-  },
-  offerStatus: {
-    fontSize: 14,
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  noItemsContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  noItemsText: {
+  lastMessage: {
     fontSize: 16,
-    color: 'gray',
+    color: '#757575',
+  },
+  time: {
+    fontSize: 14,
+    color: '#757575',
   },
 });
 
-export default Offers;
-  
+export default ChatListScreen;

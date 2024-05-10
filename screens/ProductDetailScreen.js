@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Button } from "react-native";
 
-const ProductDetailScreen = ({ route }) => {
+const ProductDetailScreen = ({ route, navigation }) => {
   const {
     name,
     price,
@@ -12,6 +12,11 @@ const ProductDetailScreen = ({ route }) => {
     condition,
     description,
   } = route.params.product;
+
+  const handleBuyPress = () => {
+    // Naviguer vers InboxScreen et envoyer les détails de la publication
+    navigation.navigate('InboxScreen', { productDetails: route.params.product });
+  };
 
   return (
     <View style={styles.container}>
@@ -47,7 +52,7 @@ const ProductDetailScreen = ({ route }) => {
           <TouchableOpacity style={styles.offerButton}>
             <Text style={styles.buttonText}>Make an offer</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buyButton}>
+          <TouchableOpacity style={styles.buyButton} onPress={handleBuyPress}>
             <Text style={styles.buttonText}>Buy now</Text>
           </TouchableOpacity>
         </View>
